@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Summary Page</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>{{article[1]}}</h1>
+
+      <p>{{ article[2] }}</p>
+    <button id="summary-button" onclick="location.href='{{ url_for('article', article_id=article[0]) }}'">Show Original</button>
+
+    <footer>
+      <p>&copy; 2023 News Article Summarization</p>
+      <a href="{{ url_for('index') }}" class="back-link">Back to Homepage</a>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
