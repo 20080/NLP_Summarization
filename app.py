@@ -33,7 +33,7 @@ def article(article_id):
     return render_template('article.html', article=articles)
 
 
-@app.route('/articlseummary/<int:article_id>')
+@app.route('/articlsummary/<int:article_id>')
 def articlesummary(article_id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM articles WHERE article_id = %s", (article_id,))
