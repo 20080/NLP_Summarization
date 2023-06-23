@@ -10,8 +10,7 @@ import networkx as nx
 def fun(input):
     df = pd.read_csv("tennis_articles_v4.csv", encoding='unicode-escape')
 
-    sentences = []
-    sentences.append(sent_tokenize(input))
+    sentences = [sent_tokenize(input)]
     sentences = sentences[0]
 
     word_embeddings = {}

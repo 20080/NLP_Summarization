@@ -1,6 +1,9 @@
+import re
+
 from flask import Flask, render_template
 import pandas as pd
 from flask_mysqldb import MySQL
+from markupsafe import Markup
 
 import nlp
 
@@ -33,18 +36,45 @@ def article(article_id):
     return render_template('article.html', article=articles)
 
 
-@app.route('/articlsummary/<int:article_id>')
+@app.route('/articlesummary/<int:article_id>')
 def articlesummary(article_id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM articles WHERE article_id = %s", (article_id,))
-    articles = cur.fetchone()
+    article1 = cur.fetchone()
+    cur.execute("SELECT tag, article_id FROM tags WHERE article_id = %s", (article_id,))
+    tags = cur.fetchall()
     cur.close()
-    articles = list(articles)  # Convert tuple to a list
-    articles[2] = nlp.fun(articles[2])  # Modify the desired element
-    articles = tuple(articles)  # Convert back to a tuple if needed
 
-    # Render the article.html template and pass the article to the template context
-    return render_template('articleSummary.html', article=articles)
+    summary = nlp.fun(article1[2])  # Generate the summary
+    print(tags)
+    # Iterate over the tags and replace them with highlighted and linked versions
+    for tag in tags:
+        tag_name = tag[0]
+        highlighted_tag = f'<a href="/relatedarticles/{tag_name}" style="color: blue;">{tag_name}</a>'
+        summary = re.sub(fr'\b{re.escape(tag_name)}\b', highlighted_tag, summary, count=1)
+
+    article1 = list(article1)  # Convert tuple to a list
+    article1[2] = summary  # Update the summary in the article list
+    article1 = tuple(article1)  # Convert back to a tuple if needed
+
+    # Render the articleSummary.html template and pass the article to the template context
+    return render_template('articleSummary.html', article=article1, summary=Markup(article1[2]))
+
+
+@app.route('/relatedarticles/<string:tag_name>')
+def relatedarticles(tag_name):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT article_id FROM tags WHERE tag = %s", (tag_name,))
+    article_ids = cur.fetchall()
+    articles = []
+    for article_id in article_ids:
+        cur.execute("SELECT * FROM articles WHERE article_id = %s", (article_id[0],))
+        article = cur.fetchone()
+        articles.append(article)
+
+    cur.close()
+
+    return render_template('relatedarticles.html', tag_name=tag_name, articles=articles)
 
 
 if __name__ == '__main__':
