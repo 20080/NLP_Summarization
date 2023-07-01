@@ -7,10 +7,10 @@ from nltk.tokenize import sent_tokenize
 import networkx as nx
 
 
-def fun(input):
+def fun(inp):
     df = pd.read_csv("tennis_articles_v4.csv", encoding='unicode-escape')
 
-    sentences = [sent_tokenize(input)]
+    sentences = [sent_tokenize(inp)]
     sentences = sentences[0]
 
     word_embeddings = {}
