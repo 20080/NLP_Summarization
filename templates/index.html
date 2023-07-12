@@ -1,25 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>News Article Summarization</title>
+  <title>Text Summarization</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
   <div class="container">
-    <h1>News Article Summarization</h1>
+    <h1>Text Summarization</h1>
 
-    <div class="article-list">
-        {% for article in articles %}
-      <div class="article-list-item">
-        <a href="{{ url_for('article', article_id=article[0]) }}" class="article-title">{{ article[1] }}</a>
-        <p> {{ article[2] }}</p>
+    <form method="POST">
+      <div class="form-group">
+        <label for="text">Input Text:</label>
+        <textarea name="text" id="text" rows="10" cols="50" placeholder="Enter your text here">{{ text }}</textarea>
       </div>
-         {% endfor %}
-    </div>
 
-    <footer>
-      <p>&copy; 2023 News Article Summarization</p>
-    </footer>
+      <div class="form-group">
+        <label for="models">Select Models:</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="models" value="google_news_vector" {% if 'google_news_vector' in selected_models %}checked{% endif %}>Google News Vector</label>
+          <label><input type="checkbox" name="models" value="glove" {% if 'glove' in selected_models %}checked{% endif %}>GloVe Model</label>
+          <label><input type="checkbox" name="models" value="bert" {% if 'bert' in selected_models %}checked{% endif %}>BERT Model</label>
+        </div>
+      <div class="form-group">
+        <label for="lines">Number of Lines in Summary:</label>
+        <input type="number" name="lines" id="lines" min="3" max="10" value="{{ line }}">
+      </div>
+      </div>
+      <div class="form-group">
+        <button type="submit">Summarize</button>
+      </div>
+    </form>
+
+    {% if summaries %}
+    <div class="summary">
+      <h1>Summaries</h1>
+      {% for model in selected_models %}
+      <h3>Using: {{ model }}</h3>
+      <p>{{ summaries[model] }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="error">
+      <p>{{ error }}</p>
+    </div>
+    {% endif %}
+
   </div>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
