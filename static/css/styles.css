@@ -1,69 +1,111 @@
 /* CSS styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-color: #f7f9fa;
+  background-color: #f7f7f7;
 }
 
 .container {
-  max-width: 600px;
+  max-width: 960px;
   text-align: center;
   background-color: #ffffff;
-  padding: 20px;
+  padding: 40px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
   margin-top: 0;
   color: #333333;
-}
-
-.article-list {
-  text-align: left;
-  margin-top: 20px;
-}
-
-.article-list-item {
-  margin-bottom: 10px;
-}
-
-.article-title {
-  color: #336699;
-  font-size: 20px;
+  font-size: 36px;
   font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+textarea,
+select,
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  resize: vertical;
+  font-size: 16px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 5px;
 }
 
 button {
   padding: 10px 20px;
-  background-color: #336699;
+  background-color: #333333;
   color: #ffffff;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #254b6e;
+  background-color: #222222;
 }
 
 button:active {
-  background-color: #1c3a52;
+  background-color: #111111;
 }
 
-footer {
-  margin-top: 20px;
-  color: #999999;
+.summary {
+  margin-top: 40px;
+  text-align: left;
 }
 
-.back-link {
-  display: block;
+.summary h2 {
+  color: #333333;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.summary p {
+  margin-bottom: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.error {
+  color: #ff0000;
+  font-weight: bold;
   margin-top: 20px;
-  color: #336699;
 }
